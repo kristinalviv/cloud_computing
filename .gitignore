@@ -48,3 +48,9 @@ venv.bak/
 __pycache__/
 *.py[cod]
 *$py.class
+
+#creds
+*creds.py
+
+#additional project
+second_task/
