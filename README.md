@@ -33,3 +33,17 @@ Repo also have code per some of previous inserted records updation.
 Then DB need to bee restored from previously cerated snapshot.
 
 Latest code in lambda shows thet DB contain all records as they were before update.
+
+
+## Haunting CVEs
+  
+Project intent to show how to find CVEs in real docker image. Trivy is used as a scanner.
+
+Trivy is an open source tool focused on detecting vulnerabilities in OS-level packages,IaC misconfigurations, SBOM discovery, Cloud scanning, Kubernetes security risks, and more.
+
+As an example 'ghcr.io/mlflow/mlflow:v2.3.0' image is scanned by [trivy](https://trivy.dev) [repo](https://github.com/aquasecurity/trivy). Only fixed HIGH and CRITICAL vulnerabilities were intended to be found.
+
+To not persist the installation binaries on our system, a Docker image is used
+```
+docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image ghcr.io/mlflow/mlflow:v2.3.0 --severity HIGH,CRITICAL --ignore-unfixed
+```
