@@ -47,3 +47,29 @@ To not persist the installation binaries on our system, a Docker image is used
 ```
 docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image ghcr.io/mlflow/mlflow:v2.3.0 --severity HIGH,CRITICAL --ignore-unfixed
 ```
+
+## Policies check
+
+Project shows how to check your project compliance with standard policies. [checkov](https://github.com/bridgecrewio/checkov)
+
+To start check, run following command:
+```
+PATH_TO_TF=/Users/khrystyna/Desktop/Ucu/Hometasks/Cloud_Computing/src/terraform
+docker run --volume $PATH_TO_TF:/tf bridgecrew/checkov:2.3.199 --quiet --compact --directory /tf
+```
+
+Output will be an info regarding total passed checks, failed checks and skipped checks.
+
+Two of them were fixed:
+
+- Added metadata_options per ec2 instance and configured to securely access instance metadata.
+
+```
+metadata_options {
+       http_endpoint = "disabled"
+  }
+```
+
+- Enabled detailed monitoring for Amazon Elastic Compute Cloud (EC2) instance. (monitoring = true)
+
+After fixing, only two failed checks left. 

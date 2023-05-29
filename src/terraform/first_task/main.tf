@@ -16,9 +16,13 @@ provider "aws" {
 resource "aws_instance" "ec2_via_terraform" {
   ami           = "ami-0889a44b331db0194"
   instance_type = "t2.micro"
+  monitoring = true 
 
   tags = {
     Name = "terraform"
+  }
+  metadata_options {
+       http_endpoint = "disabled"
   }
 }
 
