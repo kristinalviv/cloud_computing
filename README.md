@@ -73,3 +73,8 @@ metadata_options {
 - Enabled detailed monitoring for Amazon Elastic Compute Cloud (EC2) instance. (monitoring = true)
 
 After fixing, only two failed checks left. 
+
+## Pricing
+
+Project give description of target price estimation for 1.000, 100.000 and 10.000.000 HTTP function invocation per month in AWS.
+
