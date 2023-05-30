@@ -1,0 +1,42 @@
+Estimated target price for 1.000, 100.000 and 10.000.000 HTTP function invocation per month.
+
+
+- Region is US East (N. Virginia) us-east-1
+- Architecture - x86 processor
+- Amount of memory allocated: 2 GB
+- Average function duration of 60 seconds. 
+- 1000 function invocations.
+
+
+
+Expected price for 1.000 invocations
+
+Monthly request charges: 1 000 * $0.20/million = $0.0002
+Monthly compute duration (seconds): 1 000 * 60 seconds = 60 000 seconds
+Monthly compute (GB-seconds): 60 000 seconds * 2 GB = 120 000 GB-seconds
+Monthly compute duration charges: 120 000 GB-s * 0.0000166667 USD = $2,000004
+Total monthly charges = $0.0002 + $2,000004 = $2,000204
+
+
+Expected price for 100.000 invocations
+
+Monthly request charges: 100 000 * $0.20/million = $0.02
+Monthly compute duration (seconds): 100 000 * 60 seconds = 6 000 000 seconds
+Monthly compute (GB-seconds): 600 000 seconds * 2 GB = 12 000 000 GB-seconds
+Monthly compute duration charges: 12 000 000 GB-s * 0.0000166667 USD = $200,0004
+Total monthly charges = $0.02 + $200,0204 = $200,0004
+
+
+Expected price for 10.000.000 invocations
+
+Monthly request charges: 10 000 000 * $0.20/million = $2
+Monthly compute duration (seconds): 10 000 000 * 60 seconds = 600 000 000 seconds
+Monthly compute (GB-seconds): 600 000 000 seconds * 2 GB = 1 200 000 000 GB-seconds (1.2B GB-seconds)
+Monthly compute duration charges: 1.2B GB-s * 0.0000166667 USD = $20 000.04
+Total monthly charges = $2 + $20 000.04= $20 002.04
+
+
+Conclusion:
+1. What is the most expensive part of the project - Monthly compute duration charges.
+2. If there is a way to reduce the bill - yes, by using x86 processor instead of Arm. (0.0000133334 USD instead of 0.0000166667 USD)
+3. If the price changes linearly/logarithmically/exponentially and what causes this change -  computing resources usage of lambda functions; runtime period; number of requests.
