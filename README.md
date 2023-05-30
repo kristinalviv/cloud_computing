@@ -37,9 +37,9 @@ Latest code in lambda shows thet DB contain all records as they were before upda
 
 ## Haunting CVEs
   
-Project intent to show how to find CVEs in real docker image. Trivy is used as a scanner.
+Project intent to show how to find CVEs in real docker image. Trivy and Grype are used as a scanners.
 
-Trivy is an open source tool focused on detecting vulnerabilities in OS-level packages,IaC misconfigurations, SBOM discovery, Cloud scanning, Kubernetes security risks, and more.
+**Trivy** is an open source tool focused on detecting vulnerabilities in OS-level packages,IaC misconfigurations, SBOM discovery, Cloud scanning, Kubernetes security risks, and more.
 
 As an example 'ghcr.io/mlflow/mlflow:v2.3.0' image is scanned by [trivy](https://trivy.dev) [repo](https://github.com/aquasecurity/trivy). Only fixed HIGH and CRITICAL vulnerabilities were intended to be found.
 
@@ -47,6 +47,28 @@ To not persist the installation binaries on our system, a Docker image is used
 ```
 docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image ghcr.io/mlflow/mlflow:v2.3.0 --severity HIGH,CRITICAL --ignore-unfixed
 ```
+
+**Grype** is a vulnerability scanner for container images and filesystems. 
+
+As an example 'ghcr.io/mlflow/mlflow:v2.3.0' image is scanned by [grype](https://github.com/anchore/grype). Only fixed HIGH and CRITICAL vulnerabilities were intended to be found.
+
+To not persist the installation binaries on our system, a Docker image is used
+```
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock anchore/grype docker:ghcr.io/mlflow/mlflow:v2.3.0  --only-fixed
+```
+
+_This latest version contain bug (--only-fixed --fail-on High are not working). More detailed info [here](https://github.com/anchore/grype/issues/1094). Hence v0.54.0 was used, code below_
+
+
+```
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:v0.54.0 docker:ghcr.io/mlflow/mlflow:v2.3.0  --only-fixed --fail-on High
+```
+
+Trivy and Grype can be seen as equivalent tools, which are the best in class to identify and map installed software to CVEs. But even both results are pretty similar there are some discrepancies:
+
+- trivy contain title with link with fix recommendations, while Grype not.
+
+- Grype has additional vulnerabilities, which are missed in trivy. (certifi, libsystemd0, libudev1 and requests)
 
 ## Policies check
 

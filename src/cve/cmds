@@ -1,1 +1,14 @@
 docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image ghcr.io/mlflow/mlflow:v2.3.0 --severity HIGH,CRITICAL --ignore-unfixed
+
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock anchore/grype docker:ghcr.io/mlflow/mlflow:v2.3.0  --only-fixed
+(This latest version contain bug, hence v0.54.0 was used, code below)
+
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:v0.54.0 docker:ghcr.io/mlflow/mlflow:v2.3.0  --only-fixed --fail-on High
+
+
+***compare results:
+Trivy and Grype can be seen as equivalent tools, which are the best in class to identify and map installed software to CVEs. But even both results are pretty similar there are some discrepancies:
+
+- trivy contain title with link with fix recommendations, while Grype not.
+
+- Grype has additional vulnerabilities, which are missed in trivy. (certifi, libsystemd0, libudev1 and requests)
