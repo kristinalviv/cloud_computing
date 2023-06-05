@@ -100,3 +100,20 @@ After fixing, only two failed checks left.
 
 Project give description of target price estimation for 1.000, 100.000 and 10.000.000 HTTP function invocation per month in AWS.
 
+## Terraform configuration for the project
+
+Project describes in terraform configuration of all the used in previous project cloud components: Lambda, S3 buckets, SQS, CloudWatch Log group, IAM policy creation.
+Prerequites:
+```
+Terraform installed
+AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KE are set as environment variables (to authenticate the Terraform AWS provider)
+```
+
+Following commands can be used per infrastructure plan, creation and delete:
+```
+terraform init  
+terraform plan
+terraform apply
+
+terraform destroy 
+```
