@@ -3,40 +3,106 @@ Estimated target price for 1.000, 100.000 and 10.000.000 HTTP function invocatio
 
 - Region is US East (N. Virginia) us-east-1
 - Architecture - x86 processor
-- Amount of memory allocated: 2 GB
-- Average function duration of 60 seconds. 
-- 1000 function invocations.
+- Amount of memory allocated: 128 MB
+- Average function duration of 30 seconds. 
 
 
+Expected price for 1.000 invocations = $0,13520025
 
-Expected price for 1.000 invocations
-
+Lambda 'http_to_sqs' prices:
 Monthly request charges: 1 000 * $0.20/million = $0.0002
-Monthly compute duration (seconds): 1 000 * 60 seconds = 60 000 seconds
-Monthly compute (GB-seconds): 60 000 seconds * 2 GB = 120 000 GB-seconds
-Monthly compute duration charges: 120 000 GB-s * 0.0000166667 USD = $2,000004
-Total monthly charges = $0.0002 + $2,000004 = $2,000204
+Monthly compute duration (seconds): 1 000 * 30 seconds = 30 000 seconds
+Monthly compute (GB-seconds): 30 000 seconds * 0.125 GB = 7 500 GB-seconds
+Monthly compute duration charges: 7 500 GB-s * 0.0000166667 USD = $0,12500025
+Total monthly charges = $0.0002 + $0,12500025 = $0,12520025
+
+Lambda prices (we have two lambda invocations within pipeline): 
+$0,12520025 * 2 = $0,2504005
+
+SQS pricing calculations
+Tiered price for: 1000 requests
+1000 requests x 0.0000000000 USD = 0.00 USD
+Total tier cost = 0.0000 USD (Standard queue requests cost)
+Total SQS cost (monthly): 0.00 USD
+
+S3 Standard cost (Monthly): 0.01 USD
+0.00013038516 GB per month / 0.00013038516015625 GB average item size = 1.00 unrounded number of objects
+Round up by 1 (1.0000) = 1 number of objects
+Tiered price for: 0.00013038516 GB
+0.00013038516 GB x 0.0230000000 USD = 0.00 USD
+Total tier cost = 0.0000 USD (S3 Standard storage cost)
+1,000 PUT requests for S3 Standard Storage x 0.000005 USD per request = 0.005 USD (S3 Standard PUT requests cost)
+1,000 GET requests in a month x 0.0000004 USD per request = 0.0004 USD (S3 Standard GET requests cost)
+0.00013038516 GB x 0.0007 USD = 0.00 USD (S3 select returned cost)
+0.0004 USD + 0.005 USD = 0.01 USD (Total S3 Standard Storage, data requests, S3 select cost).
+S3 Standard cost (monthly): 0.01 USD
 
 
-Expected price for 100.000 invocations
 
+Expected price for 100.000 invocations = 13,040025
+
+Lambda 'http_to_sqs' prices:
 Monthly request charges: 100 000 * $0.20/million = $0.02
-Monthly compute duration (seconds): 100 000 * 60 seconds = 6 000 000 seconds
-Monthly compute (GB-seconds): 600 000 seconds * 2 GB = 12 000 000 GB-seconds
-Monthly compute duration charges: 12 000 000 GB-s * 0.0000166667 USD = $200,0004
-Total monthly charges = $0.02 + $200,0204 = $200,0004
+Monthly compute duration (seconds): 100 000 * 30 seconds = 3 000 000 seconds
+Monthly compute (GB-seconds): 30 000 seconds * 0.125 GB = 375 000 GB-seconds
+Monthly compute duration charges: 375 000 GB-s * 0.0000166667 USD = $6,2500125
+Total monthly charges = $0.02 + $6,2500125 = $6,2700125 
+
+Lambda prices (we have two lambda invocations within pipeline): 
+$6,2700125  * 2 = $12,500025
+
+SQS pricing calculations
+0.1 million standard queue requests per month
+Total SQS cost (Monthly): 0.00 USD
+
+S3 Standard cost (Monthly): 0.54 USD
+0.013038516 GB per month / 0.013038516015625 GB average item size = 1.00 unrounded number of objects
+Round up by 1 (1.0000) = 1 number of objects
+Tiered price for: 0.013038516 GB
+0.013038516 GB x 0.0230000000 USD = 0.00 USD
+Total tier cost = 0.0003 USD (S3 Standard storage cost)
+100,000 PUT requests for S3 Standard Storage x 0.000005 USD per request = 0.50 USD (S3 Standard PUT requests cost)
+100,000 GET requests in a month x 0.0000004 USD per request = 0.04 USD (S3 Standard GET requests cost)
+0.013038516 GB x 0.0007 USD = 0.00 USD (S3 select returned cost)
+0.0003 USD + 0.04 USD + 0.50 USD = 0.54 USD (Total S3 Standard Storage, data requests, S3 select cost)
+S3 Standard cost (monthly): 0.54 USD
 
 
-Expected price for 10.000.000 invocations
 
+Expected price for 10.000.000 invocations = 1 311, 9025
+
+Lambda 'http_to_sqs' prices:
 Monthly request charges: 10 000 000 * $0.20/million = $2
-Monthly compute duration (seconds): 10 000 000 * 60 seconds = 600 000 000 seconds
-Monthly compute (GB-seconds): 600 000 000 seconds * 2 GB = 1 200 000 000 GB-seconds (1.2B GB-seconds)
-Monthly compute duration charges: 1.2B GB-s * 0.0000166667 USD = $20 000.04
-Total monthly charges = $2 + $20 000.04= $20 002.04
+Monthly compute duration (seconds): 10 000 000 * 30 seconds = 300 000 000 seconds
+Monthly compute (GB-seconds): 300 000 000 seconds * 0.125 GB = 37 500 000 GB-seconds
+Monthly compute duration charges: 37 500 000 GB-s * 0.0000166667 USD = $625.00125
+Total monthly charges = $2 + $625.00125 = $627.00125
+
+Lambda prices (we have two lambda invocations within pipeline):
+$627.00125 * 2 = $1 254,0025
+
+SQS pricing calculations: 3.60 USD
+10 requests per month x 1000000 multiplier for million = 10,000,000.00 total standard queue requests
+Tiered price for: 10000000.00 requests
+1000000 requests x 0.0000000000 USD = 0.00 USD
+9000000 requests x 0.0000004000 USD = 3.60 USD
+Total tier cost: 0.00 USD + 3.60 USD = 3.6000 USD (Standard queue requests cost)
+Total SQS cost (monthly): 3.60 USD
+
+S3 Standard cost (monthly): 54.03 USD
+1.3038516 GB per month / 1.3038516015625 GB average item size = 1.00 unrounded number of objects
+Round up by 1 (1.0000) = 1 number of objects
+Tiered price for: 1.3038516 GB
+1.3038516 GB x 0.0230000000 USD = 0.03 USD
+Total tier cost = 0.0300 USD (S3 Standard storage cost)
+10,000,000 PUT requests for S3 Standard Storage x 0.000005 USD per request = 50.00 USD (S3 Standard PUT requests cost)
+10,000,000 GET requests in a month x 0.0000004 USD per request = 4.00 USD (S3 Standard GET requests cost)
+1.3038516 GB x 0.0007 USD = 0.0009 USD (S3 select returned cost)
+0.03 USD + 4.00 USD + 50.00 USD + 0.0009 USD = 54.03 USD (Total S3 Standard Storage, data requests, S3 select cost)
+S3 Standard cost (monthly): 54.03 USD
 
 
 Conclusion:
-1. What is the most expensive part of the project - Monthly compute duration charges.
-2. If there is a way to reduce the bill - yes, by using x86 processor instead of Arm. (0.0000133334 USD instead of 0.0000166667 USD)
+1. What is the most expensive part of the project - Lambda costs.
+2. If there is a whing dataay to reduce the bill - yes, by using x86 processor instead of Arm. And maybe cac
 3. If the price changes linearly/logarithmically/exponentially and what causes this change -  computing resources usage of lambda functions; runtime period; number of requests.
